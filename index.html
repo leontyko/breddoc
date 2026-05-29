@@ -2,8 +2,8 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>БредДок: Финансы</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>БредДок: Финансы — фото с камеры</title>
     <style>
         * {
             margin: 0;
@@ -14,161 +14,149 @@
         body {
             background: linear-gradient(135deg, #f3e5ff 0%, #e9d4ff 100%);
             font-family: 'Segoe UI', 'Roboto', system-ui, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+            padding: 16px;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        /* Главный контейнер — светлый с фиолетовым */
         .brand-card {
-            max-width: 600px;
+            max-width: 550px;
             width: 100%;
             background: #ffffff;
+            border-radius: 48px;
             box-shadow: 0 25px 50px -12px rgba(128, 0, 255, 0.25), 0 0 0 1px rgba(156, 39, 176, 0.15);
             overflow: hidden;
-            transition: all 0.2s ease;
         }
 
-        /* Шапка фиолетовая */
         .brand-header {
             background: linear-gradient(135deg, #7c3aed, #6d28d9);
-            padding: 24px 24px 20px;
+            padding: 20px 20px 16px;
             text-align: center;
-            position: relative;
         }
         .brand-header h1 {
-            font-size: 2.3rem;
+            font-size: 2rem;
             font-weight: 800;
-            letter-spacing: -0.5px;
             color: #ffffff;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
             margin: 0;
         }
         .brand-header p {
             color: #e9d4ff;
-            font-weight: 500;
-            margin-top: 8px;
-            font-size: 0.85rem;
+            margin-top: 6px;
+            font-size: 0.8rem;
         }
         .brand-logo-badge {
             display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255,255,255,0.2);
             border-radius: 100px;
             padding: 4px 12px;
-            font-size: 0.7rem;
-            margin-top: 10px;
+            font-size: 0.65rem;
+            margin-top: 8px;
             color: #f3e5ff;
-            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
-        /* Секция фото */
-        .photo-section {
-            padding: 28px 24px 16px;
+        /* Камера */
+        .camera-section {
+            padding: 20px 20px 12px;
             background: #fefbff;
         }
-        .upload-area {
-            background: #f7f0ff;
-            border: 2px dashed #a855f7;
-            border-radius: 48px;
-            padding: 22px 12px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-bottom: 20px;
-        }
-        .upload-area:active { background: #f0e6ff; transform: scale(0.98);}
-        .upload-icon { font-size: 3.2rem; margin-bottom: 8px; }
-        .upload-text { color: #6d28d9; font-weight: 600; font-size: 1rem; }
-        .preview-img {
-            display: block;
-            max-width: 170px;
-            max-height: 170px;
-            margin: 12px auto 0;
+        .video-wrapper {
+            position: relative;
+            background: #1a1a2e;
             border-radius: 32px;
-            box-shadow: 0 8px 20px rgba(128, 0, 255, 0.15);
-            border: 3px solid #a855f7;
-            object-fit: cover;
+            overflow: hidden;
+            aspect-ratio: 4 / 3;
+            margin-bottom: 16px;
         }
-        input[type="file"] { display: none; }
-
-        /* Кнопки в фиолетовом стиле */
-        .btn {
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .canvas-preview {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+        .camera-controls {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .btn-camera {
+            flex: 1;
+            background: #8b5cf6;
             border: none;
+            color: white;
             font-weight: 700;
-            padding: 14px 20px;
+            padding: 14px;
             border-radius: 60px;
             font-size: 1rem;
-            width: 100%;
             cursor: pointer;
             transition: 0.2s;
-            margin-top: 12px;
         }
-        .btn-primary {
-            background: #8b5cf6;
-            color: white;
-            box-shadow: 0 2px 6px rgba(139, 92, 246, 0.3);
-        }
-        .btn-primary:active { transform: scale(0.97); background: #7c3aed; }
-        .btn-primary:disabled {
-            opacity: 0.5;
-            transform: none;
-            cursor: not-allowed;
-        }
-        .btn-secondary {
+        .btn-camera:active { transform: scale(0.97); background: #7c3aed; }
+        .btn-camera-outline {
             background: #f3e8ff;
             color: #6d28d9;
             border: 1px solid #d8b4fe;
         }
-        .btn-secondary:active { background: #e9d4ff; }
-
-        /* Панель статуса */
+        .btn-camera:disabled {
+            opacity: 0.5;
+            transform: none;
+            cursor: not-allowed;
+        }
+        
         .status-panel {
             background: #f7f0ff;
             border-radius: 40px;
-            padding: 12px 16px;
-            margin: 8px 20px 12px 20px;
-            font-size: 0.85rem;
+            padding: 10px 16px;
+            margin: 8px 0 12px;
+            font-size: 0.8rem;
             font-weight: 500;
             color: #6b21a5;
             text-align: center;
             border-left: 5px solid #a855f7;
-            transition: all 0.2s;
         }
 
-        /* Блок результатов */
+        /* Результаты */
         .results-box {
             background: #fffaf5;
             margin: 12px 20px 20px 20px;
             border-radius: 40px;
-            padding: 20px;
-            box-shadow: inset 0 0 0 1px #f0e6ff, 0 6px 12px rgba(0,0,0,0.03);
+            padding: 18px;
+            box-shadow: inset 0 0 0 1px #f0e6ff;
             transition: all 0.25s;
         }
         .metric {
             background: #ffffff;
             border-radius: 28px;
-            padding: 12px 18px;
-            margin-bottom: 12px;
+            padding: 10px 16px;
+            margin-bottom: 10px;
             display: flex;
             justify-content: space-between;
             align-items: baseline;
             flex-wrap: wrap;
-            gap: 8px;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+            gap: 6px;
             border: 1px solid #eddffa;
         }
         .metric-label {
             font-weight: 700;
             color: #7c3aed;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
         .metric-value {
             font-family: 'Courier New', monospace;
-            font-size: 1.35rem;
+            font-size: 1.25rem;
             font-weight: 800;
             background: #faf5ff;
-            padding: 4px 16px;
+            padding: 4px 14px;
             border-radius: 60px;
             color: #9333ea;
         }
@@ -176,47 +164,61 @@
             background: #f5f0ff;
             color: #6b21a5;
             border-radius: 32px;
-            padding: 14px 18px;
-            margin: 16px 0 8px;
+            padding: 12px 16px;
+            margin: 12px 0 6px;
             text-align: center;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 0.9rem;
             border: 1px solid #d8b4fe;
         }
         .subscribe-line {
             background: #faf5ff;
             border-radius: 60px;
-            padding: 12px 18px;
+            padding: 10px 16px;
             margin: 8px 20px 16px 20px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 600;
             text-align: center;
             color: #7c3aed;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             cursor: pointer;
-            transition: background 0.2s;
             border: 1px solid #e9d4ff;
         }
         .footer-note {
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             text-align: center;
-            padding: 16px 20px 24px;
+            padding: 14px 20px 20px;
             color: #9b7bb5;
             background: #fefbff;
             border-top: 1px solid #f0e6ff;
         }
+        .flex-btns {
+            display: flex;
+            gap: 14px;
+            margin: 8px 20px 16px 20px;
+        }
+        .btn-secondary {
+            background: #f3e8ff;
+            color: #6d28d9;
+            border: 1px solid #d8b4fe;
+            font-weight: 700;
+            padding: 12px;
+            border-radius: 60px;
+            width: 100%;
+            cursor: pointer;
+        }
 
-        /* МОДАЛЬНОЕ ОКНО ЗАГРУЗКИ (фиолетовое) */
+        /* Модалка */
         .loading-modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(100, 50, 150, 0.8);
+            background-color: rgba(100, 50, 150, 0.85);
             backdrop-filter: blur(5px);
             display: flex;
             justify-content: center;
@@ -232,39 +234,38 @@
         }
         .loading-content {
             background: #ffffff;
-            width: 280px;
+            width: 270px;
             border-radius: 56px;
-            padding: 32px 28px 38px;
+            padding: 28px 24px 34px;
             text-align: center;
-            box-shadow: 0 25px 40px rgba(128, 0, 255, 0.2);
             border-top: 8px solid #a855f7;
         }
         .spinner {
-            width: 48px;
-            height: 48px;
-            border: 5px solid #f3e5ff;
-            border-top: 5px solid #a855f7;
+            width: 44px;
+            height: 44px;
+            border: 4px solid #f3e5ff;
+            border-top: 4px solid #a855f7;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
-            margin: 0 auto 20px;
+            margin: 0 auto 18px;
         }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes spin { to { transform: rotate(360deg); } }
         .loading-phrase {
             font-weight: 700;
             color: #7c3aed;
-            font-size: 1.1rem;
-            margin: 12px 0 6px;
+            font-size: 1rem;
         }
         .loading-sub {
             color: #a987c9;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
+            margin-top: 5px;
         }
         .fake-progress {
             width: 100%;
             background: #f3e5ff;
             border-radius: 40px;
-            height: 6px;
-            margin-top: 20px;
+            height: 5px;
+            margin-top: 18px;
             overflow: hidden;
         }
         .fake-progress-bar {
@@ -275,13 +276,9 @@
         }
         @keyframes fakeProgress {
             0% { width: 0%; }
-            20% { width: 15%; }
-            50% { width: 45%; }
-            80% { width: 75%; }
             100% { width: 100%; }
         }
     </style>
-    <!-- face-api.js для реальной детекции лиц -->
     <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
 </head>
 <body>
@@ -289,24 +286,26 @@
 <div class="brand-card">
     <div class="brand-header">
         <h1>БРЕДДОК: ФИНАНСЫ</h1>
-        <p>✨ Самая честная аналитика по мнению разработчика ✨</p>
-        <div class="brand-logo-badge">⚡ Применены AI-технологии (при разработке)</div>
+        <p>📸 Сделайте селфи — ИИ распознает лицо и выдаст абсурд</p>
+        <div class="brand-logo-badge">💜 Камера + фиолетовая магия</div>
     </div>
 
-    <div class="photo-section">
-        <div class="upload-area" id="uploadArea">
-            <div class="upload-icon">📸🤡</div>
-            <div class="upload-text">Загрузите селфи с ЧЁТКИМ ЛИЦОМ<br><span style="font-size:0.7rem;">(автоанализ запустится мгновенно)</span></div>
+    <div class="camera-section">
+        <div class="video-wrapper">
+            <video id="video" autoplay playsinline muted></video>
+            <canvas id="snapshotCanvas" class="canvas-preview"></canvas>
         </div>
-        <input type="file" id="photoInput" accept="image/jpeg, image/png, image/jpg">
-        <div id="previewContainer" style="text-align:center;"></div>
         
-        <div id="detectionStatus" class="status-panel">📸 Ожидание фото. Загрузите изображение с лицом — всё само запустится.</div>
-        <button class="btn btn-primary" id="dummyAnalyzeBtn" disabled style="opacity:0.6;">🤖 АВТОАНАЛИЗ (загрузите фото)</button>
+        <div class="camera-controls">
+            <button class="btn-camera" id="startCameraBtn">📷 Включить камеру</button>
+            <button class="btn-camera btn-camera-outline" id="captureBtn" disabled>📸 Сделать фото</button>
+        </div>
+        
+        <div id="detectionStatus" class="status-panel">📸 Нажмите «Включить камеру» и разрешите доступ</div>
     </div>
 
-    <!-- Результаты (изначально заблокированы) -->
-    <div class="results-box" id="resultsBox" style="opacity:0.5; filter: blur(5px);">
+    <!-- Результаты (изначально скрыты за блюром) -->
+    <div class="results-box" id="resultsBox" style="opacity:0.5; filter: blur(2px);">
         <div class="metric">
             <span class="metric-label">💰 УРОВЕНЬ ДОХОДА</span>
             <span class="metric-value" id="incomeValue">— ₽</span>
@@ -324,46 +323,40 @@
             <span class="metric-value" id="gramotnostValue">— %</span>
         </div>
         <div class="diagnosis" id="finalDiagnosis">
-            💜 Загрузите фото c лицом для диагноза
+            💜 Сделайте фото с камеры для диагноза
         </div>
     </div>
 
     <div class="subscribe-line" id="subscribeHint">
-        <span>💜</span> Ваш результат можно улучшить, подключив подписку <strong>БредДок Плюс</strong> — диагноз будет ещё более случайным за 199 ₽/мес <span>✨</span>
+        <span>💜</span> Подписка БредДок Плюс — диагноз ещё случайнее за 199 ₽/мес <span>✨</span>
     </div>
 
-    <!-- Только кнопка жалобы -->
-    <div class="flex-btns" style="display: flex; gap: 14px; margin: 8px 20px 16px 20px;">
-        <button class="btn btn-secondary" id="complainBtn" style="width: 100%;">📢 Пожаловаться в ЦэБе</button>
+    <div class="flex-btns">
+        <button class="btn-secondary" id="complainBtn">📢 Пожаловаться в ЦэБе</button>
     </div>
     <div class="footer-note">
-        ⚠️ Хуй мы клали на права
+        📸 Реальная детекция лица (face-api.js). Сделайте селфи с камеры — анализ запустится автоматически после фото.<br>
+        💜 Все цифры — случайная пародия, не принимайте всерьёз.
     </div>
 </div>
 
-<!-- Модальное окно загрузки с фразами -->
+<!-- Модалка загрузки -->
 <div id="loadingModal" class="loading-modal">
     <div class="loading-content">
         <div class="spinner"></div>
-        <div class="loading-phrase" id="loadingPhrase">🧠 Подключаем рандомайзер...</div>
-        <div class="loading-sub" id="loadingSub">Фиолетовая нейросеть на пределе</div>
+        <div class="loading-phrase" id="loadingPhrase">🧠 Анализируем лицо...</div>
+        <div class="loading-sub" id="loadingSub">Фиолетовая нейросеть трудится</div>
         <div class="fake-progress"><div class="fake-progress-bar"></div></div>
     </div>
 </div>
 
 <script>
     (function() {
-        // ---------- АВТОМАТИЧЕСКИЙ ЗАПУСК ПОСЛЕ ЗАГРУЗКИ ФОТО ----------
-        let modelsLoaded = false;
-        let currentImageElement = null;
-        let lastFaceBox = null;
-        let isAnalyzing = false;
-        let currentFileId = 0;
-        
-        // DOM
-        const uploadArea = document.getElementById('uploadArea');
-        const photoInput = document.getElementById('photoInput');
-        const previewContainer = document.getElementById('previewContainer');
+        // DOM элементы
+        const video = document.getElementById('video');
+        const snapshotCanvas = document.getElementById('snapshotCanvas');
+        const startCameraBtn = document.getElementById('startCameraBtn');
+        const captureBtn = document.getElementById('captureBtn');
         const detectionStatusDiv = document.getElementById('detectionStatus');
         const resultsBox = document.getElementById('resultsBox');
         const incomeSpan = document.getElementById('incomeValue');
@@ -374,23 +367,26 @@
         const loadingModal = document.getElementById('loadingModal');
         const loadingPhraseSpan = document.getElementById('loadingPhrase');
         const loadingSubSpan = document.getElementById('loadingSub');
-        const dummyBtn = document.getElementById('dummyAnalyzeBtn');
         
-        // Забавные фразы для модального окна (5 секунд)
+        let modelsLoaded = false;
+        let stream = null;
+        let isAnalyzing = false;
+        let lastFaceBox = null;
+        
+        // Забавные фразы
         const funnyPhrases = [
             { main: "🧠 Подключаем рандомайзер...", sub: "Алгоритм ищет ваш кошелёк по лицу" },
             { main: "⚙️ Калибруем фиолетовый светофор", sub: "Нейросеть перебирает пиксели" },
-            { main: "📊 Анализируем финансовую ауру", sub: "Обнаружены следы доширака и крипты" },
-            { main: "🌀 Генерируем абсурдные коэффициенты", sub: "Погрешность 146% — в пределах нормы" },
-            { main: "🤖 ИИ решает: дать вам миллион или ноль", sub: "Спойлер: всё равно случайно" },
-            { main: "💜 Заряжаем кредитный потенциал", sub: "БредДок одобрит всё, даже ипотеку на воздух" },
-            { main: "🎭 Превращаем геометрию лица в финансы", sub: "Нос → НДФЛ, уши → убытки" },
-            { main: "🧬 Биометрия говорит: вы — идеальный клиент", sub: "Для бреда, конечно же" }
+            { main: "📊 Анализируем финансовую ауру", sub: "Обнаружены следы доширака" },
+            { main: "🌀 Генерируем абсурдные коэффициенты", sub: "Погрешность 146% — норма" },
+            { main: "🤖 ИИ решает: миллион или ноль", sub: "Спойлер: случайно" },
+            { main: "💜 Заряжаем кредитный потенциал", sub: "БредДок одобрит всё" },
+            { main: "🎭 Превращаем лицо в финансы", sub: "Нос → НДФЛ" }
         ];
         
         let phraseInterval = null;
         
-        function startLoadingModalWithRotation() {
+        function startLoadingModal() {
             loadingModal.classList.add('active');
             if (phraseInterval) clearInterval(phraseInterval);
             const updatePhrase = () => {
@@ -411,55 +407,70 @@
         }
         
         // Загрузка модели face-api
-        async function loadFaceModels() {
-            detectionStatusDiv.innerText = '⏳ Загружаем детектор лиц... (face-api модель)';
+        async function loadModels() {
+            detectionStatusDiv.innerText = '⏳ Загружаем детектор лиц...';
             try {
                 const MODEL_URL = 'https://raw.githubusercontent.com/justadudewhohacks/face-api.js/master/weights';
                 await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
                 modelsLoaded = true;
-                detectionStatusDiv.innerHTML = '✅ Детектор лиц готов. Загрузите фото — анализ запустится автоматически!';
-                if (dummyBtn) dummyBtn.innerText = 'ИИ готов анализировать';
+                detectionStatusDiv.innerHTML = '✅ Детектор лиц готов. Включите камеру и сделайте селфи!';
             } catch(e) {
                 console.error(e);
-                detectionStatusDiv.innerHTML = '⚠️ Ошибка загрузки модели. Проверьте интернет, но попробуйте загрузить фото.';
+                detectionStatusDiv.innerHTML = '⚠️ Ошибка загрузки модели. Проверьте интернет.';
                 modelsLoaded = false;
             }
         }
         
-        // Реальная детекция лица на элементе
+        // Включение камеры
+        async function startCamera() {
+            try {
+                if (stream) {
+                    stream.getTracks().forEach(track => track.stop());
+                }
+                const constraints = { video: { facingMode: "user" }, audio: false };
+                stream = await navigator.mediaDevices.getUserMedia(constraints);
+                video.srcObject = stream;
+                await video.play();
+                captureBtn.disabled = false;
+                startCameraBtn.textContent = '🔄 Перезапустить камеру';
+                detectionStatusDiv.innerHTML = '📸 Камера работает. Нажмите «Сделать фото» для анализа!';
+            } catch(err) {
+                console.error(err);
+                detectionStatusDiv.innerHTML = '❌ Не удалось получить доступ к камере. Проверьте разрешения.';
+                captureBtn.disabled = true;
+            }
+        }
+        
+        // Детекция лица на изображении (из canvas)
         async function detectFaceOnImage(imgElement) {
             if (!modelsLoaded) {
-                detectionStatusDiv.innerHTML = '⏳ Модель детекции ещё не готова, подождите пару секунд и попробуйте снова загрузить фото';
-                return false;
-            }
-            if (!imgElement || !imgElement.complete || imgElement.naturalWidth === 0) {
-                detectionStatusDiv.innerHTML = '❌ Изображение не загружено.';
+                detectionStatusDiv.innerHTML = '⏳ Модель ещё не загружена, подождите...';
                 return false;
             }
             try {
-                detectionStatusDiv.innerHTML = '🧐 Нейросеть ищет лицо (честная детекция)...';
+                detectionStatusDiv.innerHTML = '🧐 Нейросеть ищет лицо...';
                 const options = new faceapi.TinyFaceDetectorOptions({ inputSize: 320, scoreThreshold: 0.5 });
                 const detections = await faceapi.detectAllFaces(imgElement, options);
                 if (detections && detections.length > 0) {
                     const box = detections[0].box;
                     lastFaceBox = { x: box.x, y: box.y, width: box.width, height: box.height };
-                    detectionStatusDiv.innerHTML = `✅ ЛИЦО РАСПОЗНАНО! Размер: ${Math.round(box.width)}x${Math.round(box.height)} px. Теперь выдаём абсурд.`;
-                    detectionStatusDiv.style.background = "#f7f0ff";
+                    detectionStatusDiv.innerHTML = `✅ ЛИЦО РАСПОЗНАНО! Размер: ${Math.round(box.width)}x${Math.round(box.height)} px.`;
+                    detectionStatusDiv.style.background = "#e6f0ff";
                     return true;
                 } else {
                     lastFaceBox = null;
-                    detectionStatusDiv.innerHTML = '❌ ЛИЦО НЕ НАЙДЕНО! Загрузите чёткое селфи (анфас). БредДок не врёт о детекции — нужно реальное лицо.';
+                    detectionStatusDiv.innerHTML = '❌ ЛИЦО НЕ НАЙДЕНО! Сделайте чёткое селфи анфас.';
                     detectionStatusDiv.style.background = "#fce4ec";
                     return false;
                 }
             } catch(err) {
                 console.warn(err);
-                detectionStatusDiv.innerHTML = '⚠️ Ошибка детекции лица. Попробуйте другое фото с хорошим освещением.';
+                detectionStatusDiv.innerHTML = '⚠️ Ошибка детекции. Попробуйте другое фото/освещение.';
                 return false;
             }
         }
         
-        // Генерация абсурдных показателей (привязана к лицу + рандом)
+        // Генерация абсурдных показателей
         function generateAbsurdStats(faceBox, imgWidth, imgHeight) {
             if (!faceBox) return null;
             let seed = (faceBox.x * 1741 + faceBox.y * 927 + faceBox.width * 523 + faceBox.height * 131) % 98765;
@@ -472,12 +483,11 @@
             income = Math.min(1950000, Math.max(15000, income));
             income = Math.round(income / 1000) * 1000;
             
-            let centerX = (faceBox.x + faceBox.width/2) / imgWidth;
-            let creditPotential = Math.floor(70000 + (faceBox.width / imgWidth) * 1500000 + (1 - Math.abs(centerX-0.5)*2) * 600000 + r(2)*400000);
+            let creditPotential = Math.floor(70000 + (faceBox.width / imgWidth) * 1500000 + r(2)*500000);
             creditPotential = Math.min(9900000, Math.max(0, creditPotential));
             creditPotential = Math.round(creditPotential / 10000) * 10000;
             
-            let alimony = Math.floor(10000 + ( (1 - (faceBox.y/imgHeight)) * 700000) + r(3)*400000);
+            let alimony = Math.floor(10000 + ((faceBox.y/imgHeight) * 800000) + r(3)*350000);
             alimony = Math.min(1500000, Math.max(0, alimony));
             alimony = Math.round(alimony / 1000) * 1000;
             
@@ -493,18 +503,16 @@
                 return "🤡 Вы — идеальный клиент для любого бреда, подпишитесь на рассылки";
             }
             if (alimony > 800000) {
-                return "💔 Долг по алиментам превышает ВВП. Но БредДок советует: подписка Плюс всё исправит! 🤡";
+                return "💔 Долг по алиментам зашкаливает! Но БредДок Плюс всё исправит 🤡";
             }
             const phrases = [
-                "💜 БредДок: «Вероятность кредита 50/50 — или дадут, или пошлют в приложение»",
-                "📉 Ваша финансовая стратегия: купил на хайпе, продал на дне. Идеально!",
-                "🏦 ИИ предлагает взять кредит на оплату курса «Как стать финансовым гением»",
-                "🤖 Нейросеть: «Клиент перспективный, денег нет, но желание — огонь!»",
-                "✨ Ваш кэшфлоу похож на зебру: то есть, то нет. Подпишитесь на рассылку БредДок",
-                "🤡 Вы — идеальный клиент для любого бреда, подпишитесь на рассылки"
+                "💜 БредДок: «Кредит одобрен на сумму от 0 до бесконечности»",
+                "📉 Ваш финансовый план: купил на хайпе, продал на дне",
+                "🏦 ИИ предлагает курс «Как стать финансовым гением за 3 дня»",
+                "🤡 Вы — идеальный клиент для любого бреда, подпишитесь на рассылки",
+                "✨ Ваш кэшфлоу: то есть, то нет. Подпишитесь на БредДок"
             ];
-            let randomIndex = Math.floor(Math.random() * phrases.length);
-            return phrases[randomIndex];
+            return phrases[Math.floor(Math.random() * phrases.length)];
         }
         
         function updateUI(stats) {
@@ -513,124 +521,103 @@
             creditSpan.innerText = stats.creditPotential.toLocaleString('ru-RU') + ' ₽';
             alimonySpan.innerText = stats.alimony.toLocaleString('ru-RU') + ' ₽';
             gramotnostSpan.innerText = stats.gramotnost + ' %';
-            const diaText = getDiagnosisText(stats.income, stats.creditPotential, stats.alimony);
-            diagnosisDiv.innerHTML = `🤡 Финансовый диагноз: ${diaText}`;
+            diagnosisDiv.innerHTML = `🤡 Финансовый диагноз: ${getDiagnosisText(stats.income, stats.creditPotential, stats.alimony)}`;
             resultsBox.style.opacity = '1';
             resultsBox.style.filter = 'blur(0px)';
         }
         
-        function resetUItoWait() {
+        function resetUI() {
             incomeSpan.innerText = '— ₽';
             creditSpan.innerText = '— ₽';
             alimonySpan.innerText = '— ₽';
             gramotnostSpan.innerText = '— %';
-            diagnosisDiv.innerHTML = '🤡 Загрузите фото c лицом для диагноза';
+            diagnosisDiv.innerHTML = '💜 Сделайте фото с камеры для диагноза';
             resultsBox.style.opacity = '0.5';
-            resultsBox.style.filter = 'blur(5px)';
+            resultsBox.style.filter = 'blur(2px)';
             lastFaceBox = null;
         }
         
-        // Главный автоматический конвейер: по новому фото запускается детекция + модалка 5 сек + выдача
-        async function autoAnalyzeNewPhoto(imageElement, fileId) {
-            if (!imageElement) return;
-            if (fileId !== currentFileId) return;
+        // Сделать фото с камеры и запустить анализ
+        async function captureAndAnalyze() {
             if (!modelsLoaded) {
-                detectionStatusDiv.innerHTML = '⏳ Модель загружается, попробуйте перезагрузить фото через пару секунд';
+                detectionStatusDiv.innerHTML = '⏳ Модель загружается, секунду...';
                 return;
             }
             if (isAnalyzing) {
-                detectionStatusDiv.innerHTML = '⏳ Анализ уже идёт, дождитесь или загрузите новое фото';
+                detectionStatusDiv.innerHTML = '⏳ Анализ уже идёт, подождите...';
                 return;
             }
+            if (!video.srcObject || !stream || video.readyState !== 4) {
+                detectionStatusDiv.innerHTML = '📸 Сначала включите камеру!';
+                return;
+            }
+            
             isAnalyzing = true;
-            dummyBtn.innerText = '🔍 АНАЛИЗ ЗАПУЩЕН...';
+            captureBtn.disabled = true;
+            detectionStatusDiv.innerHTML = '📸 Делаем фото...';
             
-            const faceFound = await detectFaceOnImage(imageElement);
+            // Снимок с видео на canvas
+            const ctx = snapshotCanvas.getContext('2d');
+            snapshotCanvas.width = video.videoWidth;
+            snapshotCanvas.height = video.videoHeight;
+            ctx.drawImage(video, 0, 0, snapshotCanvas.width, snapshotCanvas.height);
+            
+            // Показать снимок поверх видео (для визуального эффекта)
+            snapshotCanvas.style.display = 'block';
+            setTimeout(() => { snapshotCanvas.style.display = 'none'; }, 1500);
+            
+            // Создаём временное изображение для детекции
+            const tempImg = new Image();
+            tempImg.src = snapshotCanvas.toDataURL('image/jpeg', 0.9);
+            
+            await new Promise((resolve) => { tempImg.onload = resolve; });
+            
+            // Детекция лица
+            const faceFound = await detectFaceOnImage(tempImg);
             if (!faceFound || !lastFaceBox) {
-                detectionStatusDiv.innerHTML = '❌ ЛИЦО НЕ ОБНАРУЖЕНО! Загрузите другое фото с четким лицом (анфас).';
+                detectionStatusDiv.innerHTML = '❌ Лицо не найдено на фото. Попробуйте ещё раз с лучшим освещением.';
                 isAnalyzing = false;
-                dummyBtn.innerText = '🤖 АВТОАНАЛИЗ (лицо не найдено)';
-                setTimeout(() => { if(dummyBtn) dummyBtn.innerText = '💜 АВТОАНАЛИЗ (ждём фото)'; }, 2000);
+                captureBtn.disabled = false;
                 return;
             }
             
-            await startLoadingModalWithRotation();
+            // Модалка на 5 секунд
+            await startLoadingModal();
             
-            if (fileId !== currentFileId) {
-                isAnalyzing = false;
-                dummyBtn.innerText = '🤖 АВТОАНАЛИЗ (фото обновлено)';
-                return;
-            }
-            
-            const imgWidth = imageElement.naturalWidth;
-            const imgHeight = imageElement.naturalHeight;
-            const stats = generateAbsurdStats(lastFaceBox, imgWidth, imgHeight);
+            // Генерация бреда
+            const stats = generateAbsurdStats(lastFaceBox, snapshotCanvas.width, snapshotCanvas.height);
             if (stats) {
                 updateUI(stats);
-                detectionStatusDiv.innerHTML = '🎉 Лицо распознано! Результат — чистая случайность. Загрузите другое фото для нового анализа.';
-                detectionStatusDiv.style.background = "#f7f0ff";
+                detectionStatusDiv.innerHTML = '🎉 Анализ завершён! Сделайте новое селфи для другого результата.';
+                detectionStatusDiv.style.background = "#e6f0ff";
             } else {
-                detectionStatusDiv.innerHTML = '⚠️ Ошибка генерации бреда. Попробуйте другое фото.';
+                detectionStatusDiv.innerHTML = '⚠️ Ошибка генерации. Попробуйте ещё раз.';
             }
-            isAnalyzing = false;
-            dummyBtn.innerText = '✅ АНАЛИЗ ЗАВЕРШЁН (загрузите новое фото)';
-            setTimeout(() => {
-                if(dummyBtn && currentFileId === fileId) dummyBtn.innerText = 'АВТОАНАЛИЗ (ждём новое фото)';
-            }, 2500);
-        }
-        
-        // Обработка нового файла
-        function handleNewFile(file) {
-            if (!file) return;
-            currentFileId++;
-            const thisFileId = currentFileId;
             
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const img = new Image();
-                img.onload = () => {
-                    currentImageElement = img;
-                    resetUItoWait();
-                    previewContainer.innerHTML = '';
-                    const imgElem = document.createElement('img');
-                    imgElem.src = img.src;
-                    imgElem.classList.add('preview-img');
-                    previewContainer.appendChild(imgElem);
-                    
-                    detectionStatusDiv.innerHTML = '📸 Новое фото загружено. Запускаем детекцию лица...';
-                    detectionStatusDiv.style.background = "#f7f0ff";
-                    
-                    autoAnalyzeNewPhoto(img, thisFileId).catch(err => {
-                        console.warn(err);
-                        if (thisFileId === currentFileId) {
-                            detectionStatusDiv.innerHTML = '⚠️ Ошибка при анализе. Попробуйте другое фото.';
-                            isAnalyzing = false;
-                        }
-                    });
-                };
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
+            isAnalyzing = false;
+            captureBtn.disabled = false;
         }
         
-        photoInput.addEventListener('change', (e) => {
-            if (e.target.files && e.target.files.length) {
-                handleNewFile(e.target.files[0]);
-            }
-        });
-        
-        uploadArea.addEventListener('click', () => photoInput.click());
+        // Обработчики
+        startCameraBtn.addEventListener('click', startCamera);
+        captureBtn.addEventListener('click', captureAndAnalyze);
         
         complainBtn.addEventListener('click', () => {
-            alert('📢 ЦэБе:\n\n«Ваша жалоба ушла в спам»\n\nБлагодарим за использование БредДок.');
+            alert('📢 ЦЕНТРАЛЬНЫЙ БАНК (пародия):\n\n«Ваша жалоба ушла в спам»\n\nБлагодарим за использование БредДок.');
         });
         
         document.getElementById('subscribeHint').addEventListener('click', () => {
-            alert('💳 БредДок Плюс: теперь случайность вдвое случайнее за 199₽/мес. Спишется автоматически.');
+            alert('💳 БредДок Плюс: случайность станет вдвое случайнее за 199₽/мес. Спишется автоматически.');
         });
         
-        loadFaceModels();
-        resetUItoWait();
+        // Инициализация
+        loadModels();
+        resetUI();
+        
+        // Автозапуск камеры при загрузке (опционально, но удобно)
+        setTimeout(() => {
+            startCamera().catch(e => console.log('автозапуск не удался', e));
+        }, 500);
     })();
 </script>
 </body>
