@@ -7,7 +7,6 @@
 body {
     background: linear-gradient(135deg, #f3e5ff 0%, #e9d4ff 100%);
     font-family: 'Segoe UI', 'Roboto', system-ui, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
-    padding: 16px;
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -18,7 +17,6 @@ body {
     max-width: 550px;
     width: 100%;
     background: #ffffff;
-    border-radius: 48px;
     box-shadow: 0 25px 50px -12px rgba(128, 0, 255, 0.25), 0 0 0 1px rgba(156, 39, 176, 0.15);
     overflow: hidden;
 }
